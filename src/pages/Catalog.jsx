@@ -21,9 +21,28 @@ export default function Catalog() {
 
   return (
     <div style={{ backgroundColor: 'var(--bone)', minHeight: '100vh' }}>
-      {/* Заголовок */}
-      <div style={{
-        padding: '60px 40px 40px',
+      <style>{`
+        .catalog-header { padding: 60px 40px 40px; }
+        .catalog-filters { padding: 24px 40px; }
+        .catalog-grid { padding: 40px; }
+        .products-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 1px;
+          background-color: var(--espresso);
+        }
+        @media (max-width: 768px) {
+          .catalog-header { padding: 40px 24px 24px !important; }
+          .catalog-filters { padding: 16px 24px !important; }
+          .catalog-grid { padding: 1px 0 !important; }
+          .products-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 480px) {
+          .products-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
+      <div className="catalog-header" style={{
         borderBottom: '1px solid var(--espresso)',
         display: 'flex',
         justifyContent: 'space-between',
@@ -31,7 +50,7 @@ export default function Catalog() {
       }}>
         <h1 style={{
           fontFamily: 'Arial Black',
-          fontSize: '48px',
+          fontSize: 'clamp(32px, 6vw, 48px)',
           letterSpacing: '4px',
           color: 'var(--espresso)'
         }}>
@@ -42,9 +61,7 @@ export default function Catalog() {
         </p>
       </div>
 
-      {/* Фильтры */}
-      <div style={{
-        padding: '24px 40px',
+      <div className="catalog-filters" style={{
         display: 'flex',
         gap: '8px',
         flexWrap: 'wrap',
@@ -52,7 +69,7 @@ export default function Catalog() {
       }}>
         {categories.map(cat => (
           <button key={cat} onClick={() => setFilter(cat)} style={{
-            padding: '8px 20px',
+            padding: '8px 16px',
             backgroundColor: filter === cat ? 'var(--spanish-sun)' : 'transparent',
             color: filter === cat ? 'var(--bone)' : 'var(--espresso)',
             border: '1px solid var(--espresso)',
@@ -67,23 +84,17 @@ export default function Catalog() {
         ))}
       </div>
 
-      {/* Товары */}
-      <div style={{ padding: '40px' }}>
+      <div className="catalog-grid">
         {loading ? (
           <p style={{ fontFamily: 'Anonymous Pro', textAlign: 'center', padding: '80px' }}>
             Загрузка...
           </p>
         ) : filtered.length === 0 ? (
           <p style={{ fontFamily: 'Anonymous Pro', textAlign: 'center', padding: '80px' }}>
-            Товары не найдены. Добавь товары в Strapi.
+            Товары не найдены
           </p>
         ) : (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-            gap: '1px',
-            backgroundColor: 'var(--espresso)'
-          }}>
+          <div className="products-grid">
             {filtered.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}

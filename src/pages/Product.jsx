@@ -29,9 +29,23 @@ export default function Product() {
   );
 
   const { name, price_min, price_max, color, description, category } = product;
-
+  const productStyles = `
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1100px;
+  }
+  @media (max-width: 768px) {
+    .product-grid {
+      grid-template-columns: 1fr !important;
+      gap: 32px !important;
+    }
+  }
+`;
   return (
     <div style={{ backgroundColor: 'var(--bone)', minHeight: '100vh', padding: '60px 40px' }}>
+        <style>{productStyles}</style>
       <button onClick={() => navigate(-1)} style={{
         background: 'none', border: 'none', cursor: 'pointer',
         fontFamily: 'Anonymous Pro', fontSize: '11px',
@@ -41,7 +55,7 @@ export default function Product() {
         ← НАЗАД
       </button>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', maxWidth: '1100px' }}>
+      <div className="product-grid">
         {/* Фото */}
         <div style={{
           backgroundColor: 'var(--blush)',

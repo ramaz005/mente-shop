@@ -5,9 +5,17 @@ import { collection, addDoc } from 'firebase/firestore';
 import { useState } from 'react';
 
 export default function Cart() {
-  const { cart, removeFromCart, updateQty, total, setCart } = useCart();
+  const { cart, removeFromCart, updateQty, total } = useCart();
   const [ordering, setOrdering] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // ← ДОБАВЬ СЮДА:
+  const cartStyles = `
+    .cart-grid { display: grid; grid-template-columns: 1fr 350px; gap: 40px; }
+    @media (max-width: 768px) {
+      .cart-grid { grid-template-columns: 1fr !important; }
+    }
+  `;
 
   const handleOrder = async () => {
     if (cart.length === 0) return;
@@ -71,11 +79,12 @@ export default function Cart() {
 
   return (
     <div style={{ backgroundColor: 'var(--bone)', minHeight: '100vh', padding: '60px 40px' }}>
+        <style>{cartStyles}</style>
       <h1 style={{ fontFamily: 'Arial Black', fontSize: '48px', letterSpacing: '4px', marginBottom: '48px', color: 'var(--espresso)' }}>
         КОРЗИНА
       </h1>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '40px' }} className="cart-grid">
         <div>
           {cart.map(item => (
             <div key={item.id} style={{

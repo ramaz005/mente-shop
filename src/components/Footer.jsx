@@ -2,10 +2,12 @@ export default function Footer() {
   return (
     <footer style={{
       backgroundColor: 'var(--espresso)',
-      padding: '48px 40px',
+      padding: 'clamp(32px, 5vw, 48px) clamp(24px, 5vw, 40px)',
       display: 'flex',
+      flexWrap: 'wrap',
       justifyContent: 'space-between',
       alignItems: 'center',
+      gap: '24px',
       borderTop: '1px solid var(--persian-plum)'
     }}>
       <div>

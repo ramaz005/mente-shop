@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&display=swap');
 
 * {
@@ -20,4 +24,29 @@ body {
   background-color: var(--bone);
   font-family: 'Anonymous Pro', monospace;
   color: var(--espresso);
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bone);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--espresso);
+}
+
+/* Мобильные отступы */
+@media (max-width: 768px) {
+  section {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
 }
