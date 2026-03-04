@@ -3,7 +3,17 @@ import { useCart } from '../context/CartContext';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
-  const { id, name, price_min, price_max, color } = product;
+  const { id, name, price_min, price_max, color, image } = product;
+
+  // Strapi v5 — разные варианты где может быть картинка
+  const getImageUrl = () => {
+    if (product.image?.url) return `http://localhost:1337${product.image.url}`;
+    if (product.images?.[0]?.url) return `http://localhost:1337${product.images[0].url}`;
+    if (product.image?.data?.attributes?.url) return `http://localhost:1337${product.image.data.attributes.url}`;
+    return null;
+  };
+
+  const imageUrl = getImageUrl();
 
   return (
     <div style={{
@@ -21,9 +31,26 @@ export default function ProductCard({ product }) {
           height: '320px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          overflow: 'hidden'
         }}>
-          <span style={{ fontFamily: 'Arial Black', fontSize: '32px', color: 'var(--espresso)', opacity: 0.2 }}>MENTE</span>
+          {imageUrl ? (
+            <img
+              src={imageUrl}
+              alt={name}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              onError={e => { e.target.style.display = 'none'; }}
+            />
+          ) : (
+            <span style={{
+              fontFamily: 'Arial Black',
+              fontSize: '32px',
+              color: 'var(--espresso)',
+              opacity: 0.2
+            }}>
+              MENTE
+            </span>
+          )}
         </div>
 
         <div style={{ padding: '16px' }}>
