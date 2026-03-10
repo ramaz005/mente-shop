@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getProducts } from '../api/products';
+import axios from 'axios';
 import ProductCard from '../components/ProductCard';
 
 export default function Catalog() {
@@ -8,8 +8,11 @@ export default function Catalog() {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    getProducts()
-      .then(data => { setProducts(data); setLoading(false); })
+    axios.get('http://localhost:1337/api/products?populate=*')
+      .then(res => {
+        setProducts(res.data.data || []);
+        setLoading(false);
+      })
       .catch(() => setLoading(false));
   }, []);
 

@@ -3,13 +3,14 @@ import { useCart } from '../context/CartContext';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
-  const { id, name, price_min, price_max, color, image } = product;
+  const { id, name, price_min, price_max, color } = product;
 
-  // Strapi v5 — разные варианты где может быть картинка
   const getImageUrl = () => {
-    if (product.image?.url) return `http://localhost:1337${product.image.url}`;
-    if (product.images?.[0]?.url) return `http://localhost:1337${product.images[0].url}`;
-    if (product.image?.data?.attributes?.url) return `http://localhost:1337${product.image.data.attributes.url}`;
+    if (!product.images) return null;
+    if (Array.isArray(product.images) && product.images[0]?.url) {
+      return `http://localhost:1337${product.images[0].url}`;
+    }
+    if (product.images?.url) return `http://localhost:1337${product.images.url}`;
     return null;
   };
 
@@ -18,21 +19,23 @@ export default function ProductCard({ product }) {
   return (
     <div style={{
       backgroundColor: 'var(--bone)',
-      border: '1px solid var(--espresso)',
       overflow: 'hidden',
-      transition: 'transform 0.3s ease'
+      transition: 'transform 0.3s ease',
+      cursor: 'pointer'
     }}
     onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
     onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
     >
-      <Link to={`/product/${id}`} style={{ textDecoration: 'none' }}>
+      {/* Фото — кликабельно */}
+      <Link to={`/product/${product.id}}`} style={{ textDecoration: 'none', display: 'block' }}>
         <div style={{
           backgroundColor: 'var(--blush)',
           height: '320px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          position: 'relative'
         }}>
           {imageUrl ? (
             <img
@@ -54,34 +57,76 @@ export default function ProductCard({ product }) {
         </div>
 
         <div style={{ padding: '16px' }}>
-          <p style={{ fontFamily: 'Anonymous Pro', fontSize: '13px', color: 'var(--espresso)', letterSpacing: '1px', marginBottom: '4px' }}>
+          <p style={{
+            fontFamily: 'Anonymous Pro',
+            fontSize: '13px',
+            color: 'var(--espresso)',
+            letterSpacing: '1px',
+            marginBottom: '4px'
+          }}>
             {name}
           </p>
-          <p style={{ fontFamily: 'Anonymous Pro', fontSize: '11px', color: 'var(--persian-plum)' }}>
+          <p style={{
+            fontFamily: 'Anonymous Pro',
+            fontSize: '11px',
+            color: 'var(--persian-plum)'
+          }}>
             {price_min?.toLocaleString()} — {price_max?.toLocaleString()} ₽
           </p>
           {color && (
-            <p style={{ fontSize: '10px', color: 'var(--espresso)', opacity: 0.6, marginTop: '4px' }}>
+            <p style={{
+              fontSize: '10px',
+              color: 'var(--espresso)',
+              opacity: 0.6,
+              marginTop: '4px'
+            }}>
               {color}
             </p>
           )}
         </div>
       </Link>
 
-      <button
-        onClick={() => addToCart({ id, price_min, name, color })}
-        style={{
-          width: '100%', padding: '12px',
-          backgroundColor: 'var(--spanish-sun)',
-          color: 'var(--bone)', border: 'none',
-          fontFamily: 'Anonymous Pro', fontSize: '11px',
-          letterSpacing: '2px', cursor: 'pointer'
-        }}
-        onMouseEnter={e => e.target.style.backgroundColor = 'var(--persian-plum)'}
-        onMouseLeave={e => e.target.style.backgroundColor = 'var(--spanish-sun)'}
-      >
-        В КОРЗИНУ
-      </button>
+      {/* Кнопки */}
+      <div style={{ display: 'flex', gap: '1px', backgroundColor: 'var(--espresso)' }}>
+        <button
+          onClick={() => addToCart({ id, price_min, name, color })}
+          style={{
+            flex: 1,
+            padding: '12px',
+            backgroundColor: 'var(--spanish-sun)',
+            color: 'var(--bone)',
+            border: 'none',
+            fontFamily: 'Anonymous Pro',
+            fontSize: '11px',
+            letterSpacing: '2px',
+            cursor: 'pointer',
+            transition: 'background-color 0.2s'
+          }}
+          onMouseEnter={e => e.target.style.backgroundColor = 'var(--persian-plum)'}
+          onMouseLeave={e => e.target.style.backgroundColor = 'var(--spanish-sun)'}
+        >
+          В КОРЗИНУ
+        </button>
+
+        <Link
+          to={`/product/${product.id}`}
+          style={{
+            padding: '12px 16px',
+            backgroundColor: 'var(--espresso)',
+            color: 'var(--bone)',
+            border: 'none',
+            fontFamily: 'Anonymous Pro',
+            fontSize: '11px',
+            letterSpacing: '2px',
+            cursor: 'pointer',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
+          →
+        </Link>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 // tailwind.config.js
 export default {
+  
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
@@ -12,6 +13,9 @@ export default {
         "bone":          "#FBF0DA",
         "lemon-pie":     "#F9DD8A",
         "golden-matcha": "#E0C993",
+        primary: '#AA0607', // Spanish Sun
+        accent: '#601C1D', // Persian Plum
+        bg: '#FBF0DA', // Bone
       },
       fontFamily: {
         // Druk Wide Cyr — заголовки (15%)
@@ -20,6 +24,9 @@ export default {
         mono:    ["'Anonymous Pro'", "monospace"],
         // Caveat — акценты/рукопись (5%)
         script:  ["'Caveat'", "cursive"],
+        heading: ['Druk Wide Cyr', 'sans-serif'],
+        accent: ['Caveat', 'cursive'],
+        base: ['Anonymous Pro', 'monospace'],
       },
     },
   },
