@@ -8,9 +8,9 @@ export default function ProductCard({ product }) {
   const getImageUrl = () => {
     if (!product.images) return null;
     if (Array.isArray(product.images) && product.images[0]?.url) {
-      return `mente-backend-production.up.railway.app${product.images[0].url}`;
+      return `https://mente-backend-production.up.railway.app${product.images[0].url}`;
     }
-    if (product.images?.url) return `mente-backend-production.up.railway.app${product.images.url}`;
+    if (product.images?.url) return `https://mente-backend-production.up.railway.app${product.images.url}`;
     return null;
   };
 

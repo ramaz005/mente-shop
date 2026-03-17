@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
+const STRAPI = 'https://https://mente-backend-production.up.railway.app';
+
 export default function Catalog() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,7 +11,7 @@ export default function Catalog() {
   const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
-    axios.get('mente-backend-production.up.railway.app/api/products?populate=*')
+    axios.get(`${STRAPI}/api/products?populate=*`)
       .then(res => {
         setProducts(res.data.data || []);
         setLoading(false);
@@ -28,9 +30,9 @@ export default function Catalog() {
   const getImageUrl = (product) => {
     if (!product.images) return null;
     if (Array.isArray(product.images) && product.images[0]?.url)
-      return `mente-backend-production.up.railway.app${product.images[0].url}`;
+      return `${STRAPI}${product.images[0].url}`;
     if (product.images?.url)
-      return `mente-backend-production.up.railway.app${product.images.url}`;
+      return `${STRAPI}${product.images.url}`;
     return null;
   };
 
@@ -62,9 +64,7 @@ export default function Catalog() {
           transition: transform 0.4s ease;
         }
         .product-card:hover .product-img { transform: scale(1.03); }
-        .product-img-wrap {
-          overflow: hidden;
-        }
+        .product-img-wrap { overflow: hidden; }
         .product-img-placeholder {
           width: 100%;
           aspect-ratio: 3/4;
@@ -83,21 +83,11 @@ export default function Catalog() {
           color: #000;
           letter-spacing: 1px;
           margin-bottom: 4px;
-          font-weight: 400;
         }
         .product-price {
           font-family: 'Anonymous Pro', monospace;
           font-size: 15px;
           color: #000;
-          font-weight: 400;
-        }
-        .search-header {
-          padding: 24px 40px;
-          font-family: 'Anonymous Pro', monospace;
-          font-size: 14px;
-          color: #7F7F7F;
-          letter-spacing: 2px;
-          border-bottom: 1px solid #eee;
         }
         @media (max-width: 768px) {
           .catalog-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -109,12 +99,6 @@ export default function Catalog() {
           .product-card { border-right: none !important; }
         }
       `}</style>
-
-      {searchQuery && (
-        <div className="search-header">
-          ПОИСК: "{searchQuery}" — найдено {filtered.length} товаров
-        </div>
-      )}
 
       {loading ? (
         <div style={{
