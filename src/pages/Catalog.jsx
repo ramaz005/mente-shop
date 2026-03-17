@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-import ProductCard from '../components/ProductCard';
 
 export default function Catalog() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
     axios.get('http://localhost:1337/api/products?populate=*')
@@ -16,94 +17,148 @@ export default function Catalog() {
       .catch(() => setLoading(false));
   }, []);
 
-  const categories = ['all', 'top', 'leggings', 'jumpsuit', 'shorts', 'rashguard'];
+  const filtered = searchQuery
+    ? products.filter(p =>
+        p.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.color?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.category?.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : products;
 
-  const filtered = filter === 'all'
-    ? products
-    : products.filter(p => p.category === filter);
+  const getImageUrl = (product) => {
+    if (!product.images) return null;
+    if (Array.isArray(product.images) && product.images[0]?.url)
+      return `http://localhost:1337${product.images[0].url}`;
+    if (product.images?.url)
+      return `http://localhost:1337${product.images.url}`;
+    return null;
+  };
 
   return (
-    <div style={{ backgroundColor: 'var(--bone)', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#fff', minHeight: '100vh' }}>
       <style>{`
-        .catalog-header { padding: 60px 40px 40px; }
-        .catalog-filters { padding: 24px 40px; }
-        .catalog-grid { padding: 40px; }
-        .products-grid {
+        .catalog-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 1px;
-          background-color: var(--espresso);
+          grid-template-columns: repeat(4, 1fr);
+          border-top: 1px solid #000;
+        }
+        .product-card {
+          border-right: 1px solid #000;
+          border-bottom: 1px solid #000;
+          cursor: pointer;
+          text-decoration: none;
+          color: #000;
+          display: block;
+          transition: opacity 0.25s ease;
+        }
+        .product-card:hover { opacity: 0.75; }
+        .product-card:nth-child(4n) { border-right: none; }
+        .product-img {
+          width: 100%;
+          aspect-ratio: 3/4;
+          object-fit: cover;
+          display: block;
+          background: #f5f5f5;
+          transition: transform 0.4s ease;
+        }
+        .product-card:hover .product-img { transform: scale(1.03); }
+        .product-img-wrap {
+          overflow: hidden;
+        }
+        .product-img-placeholder {
+          width: 100%;
+          aspect-ratio: 3/4;
+          background: #f5f5f5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .product-info {
+          padding: 16px;
+          text-align: center;
+        }
+        .product-name {
+          font-family: 'Anonymous Pro', monospace;
+          font-size: 15px;
+          color: #000;
+          letter-spacing: 1px;
+          margin-bottom: 4px;
+          font-weight: 400;
+        }
+        .product-price {
+          font-family: 'Anonymous Pro', monospace;
+          font-size: 15px;
+          color: #000;
+          font-weight: 400;
+        }
+        .search-header {
+          padding: 24px 40px;
+          font-family: 'Anonymous Pro', monospace;
+          font-size: 14px;
+          color: #7F7F7F;
+          letter-spacing: 2px;
+          border-bottom: 1px solid #eee;
         }
         @media (max-width: 768px) {
-          .catalog-header { padding: 40px 24px 24px !important; }
-          .catalog-filters { padding: 16px 24px !important; }
-          .catalog-grid { padding: 1px 0 !important; }
-          .products-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .catalog-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .product-card:nth-child(4n) { border-right: 1px solid #000; }
+          .product-card:nth-child(2n) { border-right: none !important; }
         }
         @media (max-width: 480px) {
-          .products-grid { grid-template-columns: 1fr !important; }
+          .catalog-grid { grid-template-columns: 1fr !important; }
+          .product-card { border-right: none !important; }
         }
       `}</style>
 
-      <div className="catalog-header" style={{
-        borderBottom: '1px solid var(--espresso)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end'
-      }}>
-        <h1 style={{
-          fontFamily: 'Arial Black',
-          fontSize: 'clamp(32px, 6vw, 48px)',
-          letterSpacing: '4px',
-          color: 'var(--espresso)'
+      {searchQuery && (
+        <div className="search-header">
+          ПОИСК: "{searchQuery}" — найдено {filtered.length} товаров
+        </div>
+      )}
+
+      {loading ? (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          height: '60vh', fontFamily: 'Anonymous Pro', fontSize: '14px',
+          letterSpacing: '4px'
         }}>
-          КАТАЛОГ
-        </h1>
-        <p style={{ fontFamily: 'Caveat', fontSize: '18px', color: 'var(--persian-plum)' }}>
-          {filtered.length} товаров
-        </p>
-      </div>
-
-      <div className="catalog-filters" style={{
-        display: 'flex',
-        gap: '8px',
-        flexWrap: 'wrap',
-        borderBottom: '1px solid var(--espresso)'
-      }}>
-        {categories.map(cat => (
-          <button key={cat} onClick={() => setFilter(cat)} style={{
-            padding: '8px 16px',
-            backgroundColor: filter === cat ? 'var(--spanish-sun)' : 'transparent',
-            color: filter === cat ? 'var(--bone)' : 'var(--espresso)',
-            border: '1px solid var(--espresso)',
-            fontFamily: 'Anonymous Pro',
-            fontSize: '10px',
-            letterSpacing: '2px',
-            cursor: 'pointer',
-            textTransform: 'uppercase'
-          }}>
-            {cat === 'all' ? 'ВСЕ' : cat}
-          </button>
-        ))}
-      </div>
-
-      <div className="catalog-grid">
-        {loading ? (
-          <p style={{ fontFamily: 'Anonymous Pro', textAlign: 'center', padding: '80px' }}>
-            Загрузка...
-          </p>
-        ) : filtered.length === 0 ? (
-          <p style={{ fontFamily: 'Anonymous Pro', textAlign: 'center', padding: '80px' }}>
-            Товары не найдены
-          </p>
-        ) : (
-          <div className="products-grid">
-            {filtered.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
-      </div>
+          загрузка...
+        </div>
+      ) : filtered.length === 0 ? (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          height: '60vh', fontFamily: 'Anonymous Pro', fontSize: '14px',
+          letterSpacing: '4px'
+        }}>
+          товары не найдены
+        </div>
+      ) : (
+        <div className="catalog-grid">
+          {filtered.map(product => {
+            const imageUrl = getImageUrl(product);
+            return (
+              <Link key={product.id} to={`/product/${product.id}`} className="product-card">
+                <div className="product-img-wrap">
+                  {imageUrl ? (
+                    <img src={imageUrl} alt={product.name} className="product-img" />
+                  ) : (
+                    <div className="product-img-placeholder">
+                      <span style={{
+                        fontFamily: "'Druk Wide Cyr', 'Arial Black'",
+                        fontSize: '32px', color: '#000', opacity: 0.1
+                      }}>MENTE</span>
+                    </div>
+                  )}
+                </div>
+                <div className="product-info">
+                  <p className="product-name">{product.name}</p>
+                  <p className="product-price">{product.price_min?.toLocaleString()} ₽</p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

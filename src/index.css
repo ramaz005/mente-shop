@@ -7,6 +7,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap'); /* Акцент */
  /* Druk Wide Cyr может требовать custom import, если не в Google Fonts */
 
+ @font-face {
+  font-family: 'Druk Wide Cyr';
+  src: url('\fonts\drukwidecyr-bold.otf') format('otf');
+  font-weight: 500;
+  font-style: normal;
+}
 * {
   margin: 0;
   padding: 0;

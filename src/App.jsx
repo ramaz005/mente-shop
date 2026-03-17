@@ -10,16 +10,46 @@ import Cart from './pages/Cart';
 import About from './pages/About';
 import PageTransition from './components/PageTransition';
 
+function Layout({ children, hideNav }) {
+  return (
+    <>
+      {!hideNav && <Navbar />}
+      <main>{children}</main>
+      {!hideNav && <Footer />}
+    </>
+  );
+}
+
 function AnimatedRoutes() {
   const location = useLocation();
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-        <Route path="/catalog" element={<PageTransition><Catalog /></PageTransition>} />
-        <Route path="/product/:id" element={<PageTransition><Product /></PageTransition>} />
-        <Route path="/cart" element={<PageTransition><Cart /></PageTransition>} />
-        <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+        <Route path="/" element={
+          <Layout hideNav={true}>
+            <PageTransition><Home /></PageTransition>
+          </Layout>
+        } />
+        <Route path="/catalog" element={
+          <Layout>
+            <PageTransition><Catalog /></PageTransition>
+          </Layout>
+        } />
+        <Route path="/product/:id" element={
+          <Layout>
+            <PageTransition><Product /></PageTransition>
+          </Layout>
+        } />
+        <Route path="/cart" element={
+          <Layout>
+            <PageTransition><Cart /></PageTransition>
+          </Layout>
+        } />
+        <Route path="/about" element={
+          <Layout>
+            <PageTransition><About /></PageTransition>
+          </Layout>
+        } />
       </Routes>
     </AnimatePresence>
   );
@@ -29,11 +59,7 @@ export default function App() {
   return (
     <CartProvider>
       <BrowserRouter>
-        <Navbar />
-        <main>
-          <AnimatedRoutes />
-        </main>
-        <Footer />
+        <AnimatedRoutes />
       </BrowserRouter>
     </CartProvider>
   );
