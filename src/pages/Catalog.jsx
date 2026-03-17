@@ -9,7 +9,7 @@ export default function Catalog() {
   const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
-    axios.get('http://localhost:1337/api/products?populate=*')
+    axios.get('mente-backend-production.up.railway.app/api/products?populate=*')
       .then(res => {
         setProducts(res.data.data || []);
         setLoading(false);
@@ -28,9 +28,9 @@ export default function Catalog() {
   const getImageUrl = (product) => {
     if (!product.images) return null;
     if (Array.isArray(product.images) && product.images[0]?.url)
-      return `http://localhost:1337${product.images[0].url}`;
+      return `mente-backend-production.up.railway.app${product.images[0].url}`;
     if (product.images?.url)
-      return `http://localhost:1337${product.images.url}`;
+      return `mente-backend-production.up.railway.app${product.images.url}`;
     return null;
   };
 

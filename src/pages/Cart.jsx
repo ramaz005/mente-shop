@@ -17,7 +17,7 @@ export default function Cart() {
     if (!name || !phone) { alert('Заполните имя и телефон!'); return; }
     setOrdering(true);
     try {
-      await axios.post('http://localhost:1337/api/orders', {
+      await axios.post('mente-backend-production.up.railway.app/api/orders', {
         data: {
           total,
           order_status: 'pending',

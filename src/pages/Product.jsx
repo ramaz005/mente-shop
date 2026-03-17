@@ -14,7 +14,7 @@ export default function Product() {
   const [accordion, setAccordion] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:1337/api/products?populate=*`)
+    axios.get(`mente-backend-production.up.railway.app/api/products?populate=*`)
       .then(res => {
         const found = res.data.data.find(p => p.id === parseInt(id));
         setProduct(found || null);
@@ -26,9 +26,9 @@ export default function Product() {
   const getImageUrl = () => {
     if (!product) return null;
     if (Array.isArray(product.images) && product.images[0]?.url)
-      return `http://localhost:1337${product.images[0].url}`;
+      return `mente-backend-production.up.railway.app${product.images[0].url}`;
     if (product.images?.url)
-      return `http://localhost:1337${product.images.url}`;
+      return `mente-backend-production.up.railway.app${product.images.url}`;
     return null;
   };
 
