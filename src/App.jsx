@@ -1,53 +1,84 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { CartProvider } from './context/CartContext';
+import { Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Catalog from './pages/Catalog';
-import Product from './pages/Product';
-import Cart from './pages/Cart';
-import About from './pages/About';
 import PageTransition from './components/PageTransition';
+
+const Home = lazy(() => import('./pages/Home'));
+const Catalog = lazy(() => import('./pages/Catalog'));
+const Product = lazy(() => import('./pages/Product'));
+const Cart = lazy(() => import('./pages/Cart'));
+const About = lazy(() => import('./pages/About'));
 
 function Layout({ children, hideNav }) {
   return (
-    <>
+    <div style={{ backgroundColor: '#fff', minHeight: '100vh' }}>
       {!hideNav && <Navbar />}
       <main>{children}</main>
       {!hideNav && <Footer />}
-    </>
+    </div>
+  );
+}
+
+function LoadingScreen() {
+  return (
+    <div style={{
+      position: 'fixed', top: 0, left: 0,
+      width: '100vw', height: '100vh',
+      backgroundColor: '#fff',
+      display: 'flex', alignItems: 'center', justifyContent: 'center'
+    }}>
+      <p style={{
+        fontFamily: 'Anonymous Pro, monospace',
+        fontSize: '12px', letterSpacing: '6px',
+        color: '#000', opacity: 0.4
+      }}>
+        MENTE
+      </p>
+    </div>
   );
 }
 
 function AnimatedRoutes() {
   const location = useLocation();
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={
           <Layout hideNav={true}>
-            <PageTransition><Home /></PageTransition>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><Home /></PageTransition>
+            </Suspense>
           </Layout>
         } />
         <Route path="/catalog" element={
           <Layout>
-            <PageTransition><Catalog /></PageTransition>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><Catalog /></PageTransition>
+            </Suspense>
           </Layout>
         } />
         <Route path="/product/:id" element={
           <Layout>
-            <PageTransition><Product /></PageTransition>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><Product /></PageTransition>
+            </Suspense>
           </Layout>
         } />
         <Route path="/cart" element={
           <Layout>
-            <PageTransition><Cart /></PageTransition>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><Cart /></PageTransition>
+            </Suspense>
           </Layout>
         } />
         <Route path="/about" element={
           <Layout>
-            <PageTransition><About /></PageTransition>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><About /></PageTransition>
+            </Suspense>
           </Layout>
         } />
       </Routes>

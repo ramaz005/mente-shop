@@ -5,53 +5,29 @@
 
  @font-face {
   font-family: 'Druk Wide Cyr';
-  src: url('\fonts\drukwidecyr-bold.otf') format('otf');
+  src: url('/fonts/drukwidecyr-bold.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  --spanish-sun: #AA0607;
-  --persian-plum: #601C1D;
-  --blush: #F7D1BA;
-  --espresso: #392727;
-  --bone: #FBF0DA;
-  --lemon-pie: #F9DD8A;
-  --golden-matcha: #E0C993;
+html, body, #root {
+  background-color: #ffffff;
+  min-height: 100vh;
 }
 
 body {
-  background-color: var(--bone);
-  font-family: 'Anonymous Pro', monospace;
-  color: var(--espresso);
-  overflow-x: hidden;
+  color: #050505;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Скроллбар */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bone);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--espresso);
-}
-
-/* Мобильные отступы */
-@media (max-width: 768px) {
-  section {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-  }
-}
+a { color: inherit; }
+button { font-family: inherit; }

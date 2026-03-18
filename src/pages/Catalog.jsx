@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
@@ -12,13 +11,21 @@ export default function Catalog() {
   const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
-    axios.get(`${STRAPI}/api/products?populate=*`)
-      .then(res => {
-        setProducts(res.data.data || []);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+  const cached = sessionStorage.getItem('products');
+  if (cached) {
+    setProducts(JSON.parse(cached));
+    setLoading(false);
+    return;
+  }
+  axios.get(`${STRAPI}/api/products?populate=*`)
+    .then(res => {
+      const data = res.data.data || [];
+      sessionStorage.setItem('products', JSON.stringify(data));
+      setProducts(data);
+      setLoading(false);
+    })
+    .catch(() => setLoading(false));
+}, []);
 
   const filtered = searchQuery
     ? products.filter(p =>
