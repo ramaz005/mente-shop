@@ -14,26 +14,25 @@ export default function Cart() {
   const [phone, setPhone] = useState('');
 
   const handleOrder = async () => {
-    if (!name || !phone) { alert('Заполните имя и телефон!'); return; }
-    setOrdering(true);
-    try {
-      await axios.post('https://mente-backend-production.up.railway.app/api/orders', {
-        data: {
-          total,
-          stat: 'pending',
-          customer_name: `${name} ${surname}`,
-          customer_phone: phone,
-          customer_email: email,
-          items: cart
-        }
-      });
-      setSuccess(true);
-      clearCart();
-    } catch (e) {
-      alert('Ошибка при оформлении. Попробуйте снова.');
-    }
-    setOrdering(false);
-  };
+  if (!name || !phone) { alert('Заполните имя и телефон!'); return; }
+  setOrdering(true);
+  try {
+    await axios.post('https://mente-backend-production.up.railway.app/api/orders', {
+      data: {
+        stat: 'pending',
+        customer_name: `${name} ${surname}`,
+        customer_phone: phone,
+        customer_email: email,
+        items: cart
+      }
+    });
+    setSuccess(true);
+    clearCart();
+  } catch (e) {
+    alert('Ошибка при оформлении. Попробуйте снова.');
+  }
+  setOrdering(false);
+};
 
   if (success) return (
     <div style={{
