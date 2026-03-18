@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
-const STRAPI = 'https://https://mente-backend-production.up.railway.app';
+const STRAPI = 'https://mente-backend-production.up.railway.app';
 
 export default function Catalog() {
   const [products, setProducts] = useState([]);
