@@ -194,7 +194,7 @@ export default function Cart() {
                   <button
                     onClick={() => removeFromCart(item.id)}
                     style={{
-                      background: 'none', border: 'none', cursor: 'pointer',
+                      background: 'none', cursor: 'pointer',
                       width: '30px', height: '30px',
                       borderRadius: '50%', border: '1px solid #D4D4D4',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
