@@ -20,7 +20,7 @@ export default function Cart() {
       await axios.post('https://mente-backend-production.up.railway.app/api/orders', {
         data: {
           total,
-          order_status: 'pending',
+          stat: 'pending',
           customer_name: `${name} ${surname}`,
           customer_phone: phone,
           customer_email: email,
