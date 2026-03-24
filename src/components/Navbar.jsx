@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useState } from 'react';
 
@@ -38,7 +38,6 @@ export default function Navbar() {
           align-items: center;
           justify-content: space-between;
           padding: 0 40px;
-          transition: all 0.3s ease;
         }
         .navbar-center {
           position: absolute;
@@ -60,10 +59,12 @@ export default function Navbar() {
         .navbar-logo:hover { opacity: 0.6; }
         .navbar-tagline {
           font-family: 'Anonymous Pro', monospace;
-          font-size: 9px;
+          font-size: 8px;
+          font-weight: 400;
           color: #000;
-          letter-spacing: 1px;
-          margin-top: 2px;
+          letter-spacing: 1.5px;
+          margin-top: 3px;
+          opacity: 0.7;
         }
         .navbar-right {
           display: flex;
@@ -91,9 +92,9 @@ export default function Navbar() {
           background: #2F2F2F;
           color: #fff;
           font-family: 'Anonymous Pro', monospace;
-          font-size: 10px;
-          width: 16px;
-          height: 16px;
+          font-size: 9px;
+          width: 15px;
+          height: 15px;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -105,25 +106,23 @@ export default function Navbar() {
           cursor: pointer;
           display: flex;
           flex-direction: column;
-          gap: 5px;
+          gap: 6px;
           padding: 4px;
           transition: opacity 0.2s;
         }
         .burger-btn:hover { opacity: 0.5; }
         .burger-line {
-          width: 28px;
-          height: 2px;
+          width: 24px;
+          height: 1.5px;
           background: #000;
-          transition: all 0.3s;
+          display: block;
         }
-
-        /* Поиск */
         .search-overlay {
           position: fixed;
           top: 80px; left: 0; right: 0;
           background: #fff;
           border-bottom: 1px solid #000;
-          padding: 24px 40px;
+          padding: 20px 40px;
           z-index: 99;
           animation: slideDown 0.2s ease;
         }
@@ -135,26 +134,23 @@ export default function Navbar() {
         }
         .search-input {
           flex: 1;
-          padding: 16px 20px;
+          padding: 14px 20px;
           border: none;
           font-family: 'Anonymous Pro', monospace;
-          font-size: 18px;
+          font-size: 16px;
           outline: none;
           color: #000;
         }
         .search-submit {
-          padding: 16px 24px;
+          padding: 14px 20px;
           background: #000;
           border: none;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: background 0.2s;
         }
         .search-submit:hover { background: #AA0607; }
-
-        /* Мобильное меню */
         .mobile-menu {
           position: fixed;
           top: 0; left: 0;
@@ -170,16 +166,16 @@ export default function Navbar() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 60px;
+          margin-bottom: 48px;
         }
         .mobile-menu-link {
           font-family: 'Anonymous Pro', monospace;
-          font-size: 28px;
+          font-size: 24px;
           color: #000;
           text-decoration: none;
           letter-spacing: 3px;
           border-bottom: 1px solid #eee;
-          padding: 24px 0;
+          padding: 20px 0;
           display: block;
           transition: opacity 0.2s;
         }
@@ -188,58 +184,47 @@ export default function Navbar() {
           background: none;
           border: none;
           cursor: pointer;
-          font-size: 24px;
+          font-size: 20px;
           color: #000;
           padding: 0;
-          transition: opacity 0.2s;
+          line-height: 1;
         }
-        .close-btn:hover { opacity: 0.5; }
-
         @keyframes slideDown {
-          from { opacity: 0; transform: translateY(-10px); }
+          from { opacity: 0; transform: translateY(-8px); }
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
         }
-
         @media (max-width: 768px) {
           .navbar { padding: 0 20px; }
           .navbar-logo { font-size: 22px; }
-          .search-overlay { padding: 20px; }
         }
       `}</style>
 
       <nav className="navbar">
-        {/* Слева — бургер */}
         <button className="burger-btn" onClick={() => setMenuOpen(true)}>
-          <div className="burger-line" />
-          <div className="burger-line" />
-          <div className="burger-line" />
+          <span className="burger-line" />
+          <span className="burger-line" />
+          <span className="burger-line" />
         </button>
 
-        {/* Центр — логотип */}
         <div className="navbar-center">
-          <Link to="/" className="navbar-logo">MENTE</Link>
+          <Link to="/catalog" className="navbar-logo">MENTE</Link>
           <div className="navbar-tagline">born in moscow — inspired by spain.</div>
         </div>
 
-        {/* Справа — поиск + корзина */}
         <div className="navbar-right">
-          <button
-            className="nav-icon-btn"
-            onClick={() => setSearchOpen(!searchOpen)}
-            title="Поиск"
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2">
+          <button className="nav-icon-btn" onClick={() => setSearchOpen(!searchOpen)}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="1.5" strokeLinecap="round">
               <circle cx="11" cy="11" r="7"/>
               <line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </button>
 
-          <Link to="/cart" className="nav-icon-btn" title="Корзина">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2">
+          <Link to="/cart" className="nav-icon-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
               <line x1="3" y1="6" x2="21" y2="6"/>
               <path d="M16 10a4 4 0 0 1-8 0"/>
@@ -249,7 +234,6 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Поиск */}
       {searchOpen && (
         <div className="search-overlay">
           <form className="search-form" onSubmit={handleSearch}>
@@ -261,7 +245,7 @@ export default function Navbar() {
               autoFocus
             />
             <button type="submit" className="search-submit">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5">
                 <circle cx="11" cy="11" r="7"/>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
@@ -270,30 +254,20 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* Мобильное меню */}
       {menuOpen && (
         <div className="mobile-menu">
           <div className="mobile-menu-header">
-            <Link
-              to="/"
-              style={{
-                fontFamily: "'Druk Wide Cyr', 'Arial Black', sans-serif",
-                fontSize: '24px', color: '#000',
-                textDecoration: 'none', letterSpacing: '2px'
-              }}
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link to="/catalog" style={{
+              fontFamily: "'Druk Wide Cyr', 'Arial Black', sans-serif",
+              fontSize: '22px', color: '#000',
+              textDecoration: 'none', letterSpacing: '2px'
+            }} onClick={() => setMenuOpen(false)}>
               MENTE
             </Link>
             <button className="close-btn" onClick={() => setMenuOpen(false)}>✕</button>
           </div>
           {menuLinks.map(link => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className="mobile-menu-link"
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link key={link.to} to={link.to} className="mobile-menu-link" onClick={() => setMenuOpen(false)}>
               {link.label}
             </Link>
           ))}
