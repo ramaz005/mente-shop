@@ -1,21 +1,11 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
 
 export default memo(function ProductCard({ product }) {
-  const { addToCart } = useCart();
   const { id, name, price_min, price_max, color } = product;
 
-  const getImageUrl = () => {
-    if (!product.images) return null;
-    if (Array.isArray(product.images) && product.images[0]?.url) {
-      return `https://mente-backend-production.up.railway.app${product.images[0].url}`;
-    }
-    if (product.images?.url) return `https://mente-backend-production.up.railway.app${product.images.url}`;
-    return null;
-  };
-
-  const imageUrl = getImageUrl();
+  // Supabase: используем image_url напрямую
+  const imageUrl = product.image_url || null;
 
   return (
     <div style={{

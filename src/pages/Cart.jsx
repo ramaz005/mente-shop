@@ -2,6 +2,7 @@ import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { notifyNewOrder } from '../lib/notify';
 
 const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const validatePhone = (phone) => /^[\d\s\-\(\)]{7,15}$/.test(phone);
@@ -44,6 +45,14 @@ export default function Cart() {
     if (dbError) {
       setFormError('Ошибка при оформлении. Попробуйте снова.');
     } else {
+      const orderData = {
+        customer_name: `${name.trim()} ${surname.trim()}`,
+        customer_phone: phone.trim(),
+        customer_email: email.trim(),
+        items: cart,
+        total_amount: total,
+      };
+      await notifyNewOrder(orderData); // Telegram-уведомление
       setSuccess(true);
       clearCart();
     }
@@ -254,10 +263,13 @@ export default function Cart() {
               </div>
               <span style={{ fontFamily: 'Anonymous Pro', fontSize: '12px', color: '#555', lineHeight: '1.6' }}>
                 Я согласен(а) с{' '}
-                <span style={{ textDecoration: 'underline', color: '#2F2F2F', cursor: 'pointer' }}>
+                <Link to="/privacy" style={{ textDecoration: 'underline', color: '#2F2F2F' }}>
                   политикой конфиденциальности
-                </span>
-                {' '}и условиями публичной оферты
+                </Link>
+                {' '}и{' '}
+                <Link to="/offer" style={{ textDecoration: 'underline', color: '#2F2F2F' }}>
+                  условиями публичной оферты
+                </Link>
               </span>
             </label>
 

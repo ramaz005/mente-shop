@@ -16,6 +16,9 @@ const Admin = lazy(() => import('./pages/Admin'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Delivery = lazy(() => import('./pages/Delivery'));
 const Returns = lazy(() => import('./pages/Returns'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Offer = lazy(() => import('./pages/Offer'));
+const Contacts = lazy(() => import('./pages/Contacts'));
 
 function Layout({ children, hideNav }) {
   return (
@@ -102,6 +105,27 @@ function AnimatedRoutes() {
           <Layout>
             <Suspense fallback={<LoadingScreen />}>
               <PageTransition><Returns /></PageTransition>
+            </Suspense>
+          </Layout>
+        } />
+        <Route path="/privacy" element={
+          <Layout>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><Privacy /></PageTransition>
+            </Suspense>
+          </Layout>
+        } />
+        <Route path="/offer" element={
+          <Layout>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><Offer /></PageTransition>
+            </Suspense>
+          </Layout>
+        } />
+        <Route path="/contacts" element={
+          <Layout>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><Contacts /></PageTransition>
             </Suspense>
           </Layout>
         } />

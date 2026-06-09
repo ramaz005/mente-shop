@@ -102,8 +102,11 @@ export default function Footer() {
           <p className="footer-col-title">БОЛЬШЕ ОПЦИЙ</p>
           <Link to="/delivery" className="footer-link">ДОСТАВКА И ОПЛАТА</Link>
           <Link to="/returns" className="footer-link">ВОЗВРАТ И ОБМЕН</Link>
+          <Link to="/contacts" className="footer-link">КОНТАКТЫ</Link>
           <Link to="/about" className="footer-link">О БРЕНДЕ</Link>
           <Link to="/cart" className="footer-link">КОРЗИНА</Link>
+          <Link to="/privacy" className="footer-link">КОНФИДЕНЦИАЛЬНОСТЬ</Link>
+          <Link to="/offer" className="footer-link">ОФЕРТА</Link>
         </div>
 
         {/* Подписка */}
@@ -137,7 +140,7 @@ export default function Footer() {
 
           <p style={{ fontFamily: 'Anonymous Pro', fontSize: '13px', color: '#050505', marginTop: '16px', textAlign: 'center', lineHeight: '1.6' }}>
             Отправляя данные, вы соглашаетесь с{' '}
-            <span style={{ textDecoration: 'underline', cursor: 'pointer' }}>политикой конфиденциальности</span>
+            <Link to="/privacy" style={{ textDecoration: 'underline', color: '#050505' }}>политикой конфиденциальности</Link>
           </p>
         </div>
 
