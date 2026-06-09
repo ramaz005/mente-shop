@@ -1,11 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&display=swap');
-
-@font-face {
-  font-family: 'Druk Wide Cyr';
-  src: url('/fonts/drukwidecyr-bold.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-}
+/* Шрифты перенесены в index.html — здесь только переменные и базовые стили */
 
 :root {
   --bone: #F5F0E8;

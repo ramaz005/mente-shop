@@ -131,7 +131,7 @@ export default function Catalog() {
             <Link key={product.id} to={`/product/${product.id}`} className="product-card">
               <div className="product-img-wrap">
                 {product.image_url ? (
-                  <img src={product.image_url} alt={product.name} className="product-img" />
+                  <img src={product.image_url} alt={product.name} className="product-img" loading="lazy" width="400" height="533" />
                 ) : (
                   <div className="product-img-placeholder">
                     <span style={{ fontFamily: "'Druk Wide Cyr','Arial Black'", fontSize: '32px', color: '#000', opacity: 0.1 }}>

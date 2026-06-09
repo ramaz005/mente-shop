@@ -12,6 +12,7 @@ const Catalog = lazy(() => import('./pages/Catalog'));
 const Product = lazy(() => import('./pages/Product'));
 const Cart = lazy(() => import('./pages/Cart'));
 const About = lazy(() => import('./pages/About'));
+const Admin = lazy(() => import('./pages/Admin'));
 
 function Layout({ children, hideNav }) {
   return (
@@ -81,6 +82,11 @@ function AnimatedRoutes() {
               <PageTransition><About /></PageTransition>
             </Suspense>
           </Layout>
+        } />
+        <Route path="/admin" element={
+          <Suspense fallback={<LoadingScreen />}>
+            <Admin />
+          </Suspense>
         } />
       </Routes>
     </AnimatePresence>

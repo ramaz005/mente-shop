@@ -3,13 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MENTE</title>
+    <title>MENTE — спортивная одежда</title>
+    <meta name="description" content="MENTE — спортивная одежда. Born in Moscow, inspired by Spain." />
+    <meta property="og:title" content="MENTE" />
+    <meta property="og:description" content="Born in Moscow. Inspired by Spain." />
+    <meta property="og:image" content="/hero.jpg" />
+
+    <!-- Preconnect — ускоряет DNS и TLS для шрифтов и Supabase -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://mskdyhbppnzdnsfievjd.supabase.co" />
+
+    <!-- Google Fonts через link — не блокирует рендер в отличие от @import в CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+
+    <!-- Preload кириллического шрифта — браузер начнёт грузить сразу -->
+    <link rel="preload" href="/fonts/drukwidecyr-bold.otf" as="font" type="font/otf" crossorigin />
+
     <style>
       @font-face {
         font-family: 'Druk Wide Cyr';
         src: url('/fonts/drukwidecyr-bold.otf') format('opentype');
         font-weight: 500;
         font-style: normal;
+        font-display: swap;
       }
     </style>
   </head>
