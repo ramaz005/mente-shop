@@ -13,6 +13,9 @@ const Product = lazy(() => import('./pages/Product'));
 const Cart = lazy(() => import('./pages/Cart'));
 const About = lazy(() => import('./pages/About'));
 const Admin = lazy(() => import('./pages/Admin'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const Delivery = lazy(() => import('./pages/Delivery'));
+const Returns = lazy(() => import('./pages/Returns'));
 
 function Layout({ children, hideNav }) {
   return (
@@ -87,6 +90,27 @@ function AnimatedRoutes() {
           <Suspense fallback={<LoadingScreen />}>
             <Admin />
           </Suspense>
+        } />
+        <Route path="/delivery" element={
+          <Layout>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><Delivery /></PageTransition>
+            </Suspense>
+          </Layout>
+        } />
+        <Route path="/returns" element={
+          <Layout>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><Returns /></PageTransition>
+            </Suspense>
+          </Layout>
+        } />
+        <Route path="*" element={
+          <Layout>
+            <Suspense fallback={<LoadingScreen />}>
+              <PageTransition><NotFound /></PageTransition>
+            </Suspense>
+          </Layout>
         } />
       </Routes>
     </AnimatePresence>

@@ -100,7 +100,8 @@ export default function Footer() {
         {/* Навигация */}
         <div>
           <p className="footer-col-title">БОЛЬШЕ ОПЦИЙ</p>
-          <Link to="/catalog" className="footer-link">КАТАЛОГ</Link>
+          <Link to="/delivery" className="footer-link">ДОСТАВКА И ОПЛАТА</Link>
+          <Link to="/returns" className="footer-link">ВОЗВРАТ И ОБМЕН</Link>
           <Link to="/about" className="footer-link">О БРЕНДЕ</Link>
           <Link to="/cart" className="footer-link">КОРЗИНА</Link>
         </div>

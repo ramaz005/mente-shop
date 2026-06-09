@@ -88,7 +88,7 @@ export default function Home() {
         }
       `}</style>
 
-      <img src="/hero.jpg" alt="MENTE" className="hero-img" />
+      <img src="/hero.webp" alt="MENTE" className="hero-img" />
       <div className="hero-overlay" />
 
       <div className="hero-content">

@@ -74,34 +74,20 @@ export default memo(function ProductCard({ product }) {
         </div>
       </Link>
 
-      <div style={{ display: 'flex', gap: '1px', backgroundColor: 'var(--espresso)' }}>
-        <button
-          onClick={() => addToCart({ id, price_min, name, color })}
-          style={{
-            flex: 1, padding: '12px',
-            backgroundColor: 'var(--spanish-sun)',
-            color: 'var(--bone)', border: 'none',
-            fontFamily: 'Anonymous Pro', fontSize: '11px',
-            letterSpacing: '2px', cursor: 'pointer',
-            transition: 'background-color 0.2s'
-          }}
-          onMouseEnter={e => e.target.style.backgroundColor = 'var(--persian-plum)'}
-          onMouseLeave={e => e.target.style.backgroundColor = 'var(--spanish-sun)'}
-        >
-          В КОРЗИНУ
-        </button>
-
-        <Link to={`/product/${id}`} style={{
-          padding: '12px 16px',
-          backgroundColor: 'var(--espresso)',
-          color: 'var(--bone)',
-          textDecoration: 'none',
-          display: 'flex', alignItems: 'center',
-          fontFamily: 'Anonymous Pro', fontSize: '14px'
-        }}>
-          →
-        </Link>
-      </div>
+      <Link to={`/product/${id}`} style={{
+        display: 'block', padding: '12px',
+        backgroundColor: 'var(--espresso)',
+        color: 'var(--bone)',
+        textDecoration: 'none',
+        fontFamily: 'Anonymous Pro', fontSize: '11px',
+        letterSpacing: '2px', textAlign: 'center',
+        transition: 'background-color 0.2s'
+      }}
+        onMouseEnter={e => e.currentTarget.style.backgroundColor = '#AA0607'}
+        onMouseLeave={e => e.currentTarget.style.backgroundColor = 'var(--espresso)'}
+      >
+        ВЫБРАТЬ →
+      </Link>
     </div>
   );
 })
