@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
-export default function ProductCard({ product }) {
+export default memo(function ProductCard({ product }) {
   const { addToCart } = useCart();
   const { id, name, price_min, price_max, color } = product;
 
@@ -103,4 +104,4 @@ export default function ProductCard({ product }) {
       </div>
     </div>
   );
-}
+})

@@ -128,6 +128,8 @@ export default function Product() {
               src={product.image_url}
               alt={product.name}
               style={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: '600px', display: 'block' }}
+              loading="eager"
+              fetchpriority="high"
             />
           ) : (
             <div style={{ width: '100%', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
