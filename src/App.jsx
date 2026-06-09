@@ -5,6 +5,7 @@ import { Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import PageTransition from './components/PageTransition';
+import CookieBanner from './components/CookieBanner';
 
 const Home = lazy(() => import('./pages/Home'));
 const Catalog = lazy(() => import('./pages/Catalog'));
@@ -91,6 +92,7 @@ export default function App() {
     <CartProvider>
       <BrowserRouter>
         <AnimatedRoutes />
+        <CookieBanner />
       </BrowserRouter>
     </CartProvider>
   );

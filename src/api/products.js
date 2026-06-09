@@ -1,13 +1,22 @@
-import axios from 'axios';
-
-const STRAPI = 'https://mente-backend-production.up.railway.app';
+import { supabase } from '../lib/supabase';
 
 export const getProducts = async () => {
-  const res = await axios.get(`${STRAPI}/api/products?populate=*`);
-  return res.data.data;
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) throw new Error(error.message);
+  return data;
 };
 
 export const getProductById = async (id) => {
-  const res = await axios.get(`${STRAPI}/api/products/${id}?populate=*`);
-  return res.data.data;
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .eq('id', parseInt(id))
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
 };

@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import axios from 'axios';
-
-const STRAPI = 'https://mente-backend-production.up.railway.app';
+import { getProductById } from '../api/products';
 
 export default function Product() {
   const { id } = useParams();
@@ -17,30 +15,16 @@ export default function Product() {
   const [accordion, setAccordion] = useState(null);
 
   useEffect(() => {
-    axios.get(`${STRAPI}/api/products?populate=*`)
-      .then(res => {
-        const found = res.data.data.find(p => p.id === parseInt(id));
-        setProduct(found || null);
+    getProductById(id)
+      .then(data => {
+        setProduct(data);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setProduct(null);
+        setLoading(false);
+      });
   }, [id]);
-
-  const getImageUrl = () => {
-    if (!product) return null;
-    if (Array.isArray(product.images) && product.images[0]?.url)
-      return `${STRAPI}${product.images[0].url}`;
-    if (product.images?.url) return `${STRAPI}${product.images.url}`;
-    return null;
-  };
-
-  const getDescription = () => {
-    if (!product?.description) return '';
-    if (typeof product.description === 'string') return product.description;
-    if (Array.isArray(product.description))
-      return product.description.map(b => b.children?.map(c => c.text).join('') || '').join('\n');
-    return '';
-  };
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -48,12 +32,19 @@ export default function Product() {
       setTimeout(() => setSizeError(false), 2000);
       return;
     }
-    addToCart({ id: product.id, price_min: product.price_min, name: product.name, color: product.color, size: selectedSize });
+    addToCart({
+      id: product.id,
+      price_min: product.price_min,
+      name: product.name,
+      color: product.color,
+      size: selectedSize,
+      image: product.image_url || null,
+    });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
 
-  const sizes = ['XS', 'S', 'M'];
+  const sizes = product?.sizes || ['XS', 'S', 'M'];
 
   if (loading) return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
@@ -69,9 +60,6 @@ export default function Product() {
       </button>
     </div>
   );
-
-  const imageUrl = getImageUrl();
-  const description = getDescription();
 
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh' }}>
@@ -135,8 +123,12 @@ export default function Product() {
       <div className="product-wrap">
         {/* ФОТО */}
         <div className="product-left">
-          {imageUrl ? (
-            <img src={imageUrl} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: '600px', display: 'block' }} />
+          {product.image_url ? (
+            <img
+              src={product.image_url}
+              alt={product.name}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: '600px', display: 'block' }}
+            />
           ) : (
             <div style={{ width: '100%', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <span style={{ fontFamily: "'Druk Wide Cyr','Arial Black'", fontSize: '48px', color: '#000', opacity: 0.08 }}>MENTE</span>
@@ -206,7 +198,7 @@ export default function Product() {
 
           {/* Аккордеон */}
           {[
-            { key: 'desc', label: 'описание', content: description || 'Описание отсутствует' },
+            { key: 'desc', label: 'описание', content: product.description || 'Описание отсутствует' },
             { key: 'care', label: 'состав и уход', content: '95% полиэстер, 5% эластан. Машинная стирка при 30°C.' },
             { key: 'size', label: 'размерная сетка', content: 'XS — 42, S — 44, M — 46' },
           ].map(item => (

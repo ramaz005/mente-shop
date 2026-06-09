@@ -25,3 +25,7 @@ dist-ssr
 
 .vercel
 mente-backend/
+# Environment files
+.env
+.env.local
+.env.production

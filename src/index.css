@@ -1,16 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap'); /* База */
-@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap'); /* Акцент */
- /* Druk Wide Cyr может требовать custom import, если не в Google Fonts */
 
- @font-face {
+@font-face {
   font-family: 'Druk Wide Cyr';
   src: url('/fonts/drukwidecyr-bold.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&display=swap');
+:root {
+  --bone: #F5F0E8;
+  --espresso: #2C1810;
+  --blush: #E8C4B8;
+  --spanish-sun: #D4621A;
+  --golden-matcha: #C8A84B;
+  --lemon-pie: #F2E55C;
+  --persian-plum: #6B1F2A;
+}
 
 * {
   margin: 0;

@@ -1,31 +1,47 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import axios from 'axios';
-
-const STRAPI = 'https://mente-backend-production.up.railway.app';
+import { getProducts } from '../api/products';
 
 export default function Catalog() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
-  const cached = sessionStorage.getItem('products');
-  if (cached) {
-    setProducts(JSON.parse(cached));
-    setLoading(false);
-    return;
-  }
-  axios.get(`${STRAPI}/api/products?populate=*`)
-    .then(res => {
-      const data = res.data.data || [];
-      sessionStorage.setItem('products', JSON.stringify(data));
-      setProducts(data);
+    const cached = sessionStorage.getItem('mente_products');
+    const cachedAt = sessionStorage.getItem('mente_products_at');
+    const TTL = 5 * 60 * 1000; // 5 минут
+
+    if (cached && cachedAt && Date.now() - parseInt(cachedAt) < TTL) {
+      setProducts(JSON.parse(cached));
       setLoading(false);
-    })
-    .catch(() => setLoading(false));
-}, []);
+      return;
+    }
+
+    // Таймаут — если за 10 сек ничего не пришло, показываем ошибку
+    const timeout = setTimeout(() => {
+      setError('Сервер не отвечает. Проверьте подключение.');
+      setLoading(false);
+    }, 10000);
+
+    getProducts()
+      .then(data => {
+        clearTimeout(timeout);
+        sessionStorage.setItem('mente_products', JSON.stringify(data));
+        sessionStorage.setItem('mente_products_at', Date.now().toString());
+        setProducts(data || []);
+        setLoading(false);
+      })
+      .catch(err => {
+        clearTimeout(timeout);
+        setError(err.message);
+        setLoading(false);
+      });
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   const filtered = searchQuery
     ? products.filter(p =>
@@ -34,15 +50,6 @@ export default function Catalog() {
         p.category?.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : products;
-
-  const getImageUrl = (product) => {
-    if (!product.images) return null;
-    if (Array.isArray(product.images) && product.images[0]?.url)
-      return `${STRAPI}${product.images[0].url}`;
-    if (product.images?.url)
-      return `${STRAPI}${product.images.url}`;
-    return null;
-  };
 
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh' }}>
@@ -81,21 +88,15 @@ export default function Catalog() {
           align-items: center;
           justify-content: center;
         }
-        .product-info {
-          padding: 16px;
-          text-align: center;
-        }
+        .product-info { padding: 16px; text-align: center; }
         .product-name {
           font-family: 'Anonymous Pro', monospace;
-          font-size: 15px;
-          color: #000;
-          letter-spacing: 1px;
-          margin-bottom: 4px;
+          font-size: 15px; color: #000;
+          letter-spacing: 1px; margin-bottom: 4px;
         }
         .product-price {
           font-family: 'Anonymous Pro', monospace;
-          font-size: 15px;
-          color: #000;
+          font-size: 15px; color: #000;
         }
         @media (max-width: 768px) {
           .catalog-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -111,44 +112,40 @@ export default function Catalog() {
       {loading ? (
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          height: '60vh', fontFamily: 'Anonymous Pro', fontSize: '14px',
-          letterSpacing: '4px'
-        }}>
-          загрузка...
-        </div>
-      ) : filtered.length === 0 ? (
+          height: '60vh', fontFamily: 'Anonymous Pro', fontSize: '14px', letterSpacing: '4px'
+        }}>загрузка...</div>
+      ) : error ? (
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           height: '60vh', fontFamily: 'Anonymous Pro', fontSize: '14px',
-          letterSpacing: '4px'
-        }}>
-          товары не найдены
-        </div>
+          letterSpacing: '2px', color: '#AA0607'
+        }}>ошибка загрузки товаров</div>
+      ) : filtered.length === 0 ? (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          height: '60vh', fontFamily: 'Anonymous Pro', fontSize: '14px', letterSpacing: '4px'
+        }}>товары не найдены</div>
       ) : (
         <div className="catalog-grid">
-          {filtered.map(product => {
-            const imageUrl = getImageUrl(product);
-            return (
-              <Link key={product.id} to={`/product/${product.id}`} className="product-card">
-                <div className="product-img-wrap">
-                  {imageUrl ? (
-                    <img src={imageUrl} alt={product.name} className="product-img" />
-                  ) : (
-                    <div className="product-img-placeholder">
-                      <span style={{
-                        fontFamily: "'Druk Wide Cyr', 'Arial Black'",
-                        fontSize: '32px', color: '#000', opacity: 0.1
-                      }}>MENTE</span>
-                    </div>
-                  )}
-                </div>
-                <div className="product-info">
-                  <p className="product-name">{product.name}</p>
-                  <p className="product-price">{product.price_min?.toLocaleString()} ₽</p>
-                </div>
-              </Link>
-            );
-          })}
+          {filtered.map(product => (
+            <Link key={product.id} to={`/product/${product.id}`} className="product-card">
+              <div className="product-img-wrap">
+                {product.image_url ? (
+                  <img src={product.image_url} alt={product.name} className="product-img" />
+                ) : (
+                  <div className="product-img-placeholder">
+                    <span style={{ fontFamily: "'Druk Wide Cyr','Arial Black'", fontSize: '32px', color: '#000', opacity: 0.1 }}>
+                      MENTE
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="product-info">
+                <p className="product-name">{product.name}</p>
+                <p className="product-price">{product.price_min?.toLocaleString()} ₽</p>
+              </div>
+            </Link>
+          ))}
         </div>
       )}
     </div>
