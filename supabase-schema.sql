@@ -37,7 +37,17 @@ CREATE TABLE newsletter_subscribers (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 4. Открыть публичный доступ на ЧТЕНИЕ для товаров (анонимные пользователи могут читать)
+-- 4. Обращения с формы на сайте
+CREATE TABLE contact_messages (
+  id         SERIAL PRIMARY KEY,
+  email      VARCHAR(255) NOT NULL,
+  message    TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Anyone can send message" ON contact_messages FOR INSERT WITH CHECK (true);
+
+-- 5. Открыть публичный доступ на ЧТЕНИЕ для товаров (анонимные пользователи могут читать)
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Public read products" ON products FOR SELECT USING (true);
 

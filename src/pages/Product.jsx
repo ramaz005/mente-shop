@@ -140,11 +140,6 @@ export default function Product() {
 
         {/* ИНФО */}
         <div className="product-right">
-          {product.category && (
-            <p style={{ fontFamily: 'Anonymous Pro', fontSize: '10px', letterSpacing: '4px', color: '#AA0607', marginBottom: '12px' }}>
-              {product.category.toUpperCase()}
-            </p>
-          )}
 
           <h1 style={{ fontFamily: 'Anonymous Pro, monospace', fontSize: 'clamp(16px, 2vw, 24px)', fontWeight: '400', color: '#050505', letterSpacing: '2px', marginBottom: '12px', textTransform: 'uppercase' }}>
             {product.name}
@@ -200,9 +195,9 @@ export default function Product() {
 
           {/* Аккордеон */}
           {[
-            { key: 'desc', label: 'описание', content: product.description || 'Описание отсутствует' },
-            { key: 'care', label: 'состав и уход', content: '95% полиэстер, 5% эластан. Машинная стирка при 30°C.' },
-            { key: 'size', label: 'размерная сетка', content: 'XS — 42, S — 44, M — 46' },
+            { key: 'desc', label: 'Описание', content: product.description || 'Описание отсутствует' },
+            { key: 'care', label: 'Состав и уход', content: '95% полиэстер, 5% эластан. Машинная стирка при 30°C.' },
+            { key: 'size', label: 'Размерная сетка', content: 'XS — 42, S — 44, M — 46' },
           ].map(item => (
             <div key={item.key} className="accordion-item">
               <button className="accordion-header" onClick={() => setAccordion(accordion === item.key ? null : item.key)}>

@@ -104,13 +104,13 @@ export default function Cart() {
         }
         .qty-wrap { display: flex; align-items: center; gap: 8px; }
         .qty-btn {
-          width: 28px; height: 28px;
+          width: 30px; height: 30px;
           border-radius: 50%;
           border: 1px solid #ccc;
           background: none; cursor: pointer;
-          font-family: 'Anonymous Pro'; font-size: 14px;
+          font-family: 'Anonymous Pro'; font-size: 13px;
           display: flex; align-items: center; justify-content: center;
-          line-height: 1; padding: 0;
+          line-height: 1; padding: 0; flex-shrink: 0;
           transition: border-color 0.2s;
         }
         .qty-btn:hover { border-color: #000; }
@@ -193,10 +193,16 @@ export default function Cart() {
                 </div>
 
                 <div className="qty-wrap">
-                  <button className="qty-btn" onClick={() => updateQty(item.id, item.qty - 1)}>−</button>
+                  <button className="qty-btn" onClick={() => updateQty(item.id, item.qty - 1)} aria-label="Уменьшить">
+                    <svg width="10" height="2" viewBox="0 0 10 2" fill="none"><line x1="0" y1="1" x2="10" y2="1" stroke="#000" strokeWidth="1.5"/></svg>
+                  </button>
                   <span style={{ fontFamily: 'Anonymous Pro', fontSize: '14px', minWidth: '20px', textAlign: 'center' }}>{item.qty}</span>
-                  <button className="qty-btn" onClick={() => updateQty(item.id, item.qty + 1)}>+</button>
-                  <button className="qty-btn" onClick={() => removeFromCart(item.id)}>✕</button>
+                  <button className="qty-btn" onClick={() => updateQty(item.id, item.qty + 1)} aria-label="Увеличить">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="0" x2="5" y2="10" stroke="#000" strokeWidth="1.5"/><line x1="0" y1="5" x2="10" y2="5" stroke="#000" strokeWidth="1.5"/></svg>
+                  </button>
+                  <button className="qty-btn" onClick={() => removeFromCart(item.id)} aria-label="Удалить">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="0" y1="0" x2="10" y2="10" stroke="#000" strokeWidth="1.5"/><line x1="10" y1="0" x2="0" y2="10" stroke="#000" strokeWidth="1.5"/></svg>
+                  </button>
                 </div>
               </div>
             ))}

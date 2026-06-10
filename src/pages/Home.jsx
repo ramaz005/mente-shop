@@ -1,12 +1,38 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+
+// Добавляй сюда пути к новым фото когда заказчик пришлёт:
+// '/hero2.webp', '/hero3.webp' и т.д.
+const SLIDES = [
+  '/hero.webp',
+];
+
+const INTERVAL = 3500; // автопрокрутка 3.5 сек
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
+  const [current, setCurrent] = useState(0);
+  const timerRef = useRef(null);
 
   useEffect(() => {
     setTimeout(() => setLoaded(true), 100);
   }, []);
+
+  useEffect(() => {
+    if (SLIDES.length <= 1) return;
+    timerRef.current = setInterval(() => {
+      setCurrent(prev => (prev + 1) % SLIDES.length);
+    }, INTERVAL);
+    return () => clearInterval(timerRef.current);
+  }, []);
+
+  const goTo = (i) => {
+    setCurrent(i);
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setCurrent(prev => (prev + 1) % SLIDES.length);
+    }, INTERVAL);
+  };
 
   return (
     <div style={{
@@ -18,20 +44,19 @@ export default function Home() {
       backgroundColor: '#000'
     }}>
       <style>{`
-        .hero-img {
+        .slide {
           position: absolute;
           top: 0; left: 0;
           width: 100%; height: 100%;
           object-fit: cover;
           object-position: center top;
-          opacity: ${loaded ? 1 : 0};
-          transition: opacity 1.2s ease;
+          transition: opacity 0.9s ease;
         }
         .hero-overlay {
           position: absolute;
           top: 0; left: 0;
           width: 100%; height: 100%;
-          background: rgba(0,0,0,0.15);
+          background: rgba(0,0,0,0.18);
           z-index: 1;
         }
         .hero-content {
@@ -46,56 +71,97 @@ export default function Home() {
         }
         .hero-title {
           font-family: 'Druk Wide Cyr', 'Arial Black', sans-serif;
-          font-style: normal;
           font-weight: 500;
-          font-size: 81px;
-          line-height: 98px;
+          font-size: 56px;
+          line-height: 1.1;
           color: #FFFFFF;
           margin: 0;
           letter-spacing: 2px;
         }
         .hero-sub {
           font-family: 'Anonymous Pro', monospace;
-          font-style: normal;
           font-weight: 400;
-          font-size: 21.5px;
-          line-height: 22px;
-          color: #FFFFFF;
-          margin: 0;
-          margin-top: 4px;
+          font-size: 13px;
+          line-height: 1.4;
+          color: rgba(255,255,255,0.85);
+          margin: 6px 0 0;
+          letter-spacing: 4px;
+          text-transform: lowercase;
         }
         .hero-btn {
           display: inline-block;
           font-family: 'Anonymous Pro', monospace;
-          font-style: normal;
           font-weight: 400;
-          font-size: 22px;
-          line-height: 22px;
+          font-size: 14px;
+          line-height: 1;
           color: #FFFFFF;
           text-decoration: underline;
           text-underline-offset: 4px;
-          margin-top: 24px;
+          margin-top: 28px;
           transition: opacity 0.3s;
           cursor: pointer;
-          letter-spacing: 1px;
+          letter-spacing: 3px;
         }
         .hero-btn:hover { opacity: 0.6; }
-
+        .hero-dots {
+          position: absolute;
+          bottom: 32px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 3;
+          display: flex;
+          gap: 8px;
+        }
+        .hero-dot {
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.4);
+          cursor: pointer;
+          transition: background 0.3s, transform 0.3s;
+          border: none;
+          padding: 0;
+        }
+        .hero-dot.active {
+          background: #fff;
+          transform: scale(1.3);
+        }
         @media (max-width: 768px) {
-          .hero-title { font-size: 48px !important; line-height: 1.1 !important; }
-          .hero-sub { font-size: 14px !important; }
-          .hero-btn { font-size: 16px !important; }
+          .hero-title { font-size: 36px !important; }
+          .hero-sub { font-size: 11px !important; letter-spacing: 3px !important; }
+          .hero-btn { font-size: 12px !important; }
         }
       `}</style>
 
-      <img src="/hero.webp" alt="MENTE" className="hero-img" />
+      {SLIDES.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt="MENTE"
+          className="slide"
+          style={{ opacity: i === current ? (loaded ? 1 : 0) : 0 }}
+        />
+      ))}
+
       <div className="hero-overlay" />
 
       <div className="hero-content">
         <h1 className="hero-title">MENTE</h1>
-        <p className="hero-sub">born in moscow - inspired by spain.</p>
+        <p className="hero-sub">store</p>
         <Link to="/catalog" className="hero-btn">CATALOG</Link>
       </div>
+
+      {SLIDES.length > 1 && (
+        <div className="hero-dots">
+          {SLIDES.map((_, i) => (
+            <button
+              key={i}
+              className={`hero-dot${i === current ? ' active' : ''}`}
+              onClick={() => goTo(i)}
+              aria-label={`Слайд ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

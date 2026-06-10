@@ -40,3 +40,25 @@ export const notifyNewOrder = async (order) => {
     // Не прерываем оформление заказа если уведомление не отправилось
   }
 };
+
+export const notifyContact = async ({ email, message }) => {
+  if (!BOT_TOKEN || !CHAT_ID) return;
+
+  const text = [
+    '✉️ *Новый вопрос с сайта MENTE*',
+    '',
+    `📧 ${email}`,
+    '',
+    `💬 ${message}`,
+  ].join('\n');
+
+  try {
+    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: CHAT_ID, text, parse_mode: 'Markdown' }),
+    });
+  } catch {
+    // Молча пропускаем
+  }
+};
