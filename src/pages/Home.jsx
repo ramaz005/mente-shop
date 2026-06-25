@@ -72,7 +72,7 @@ export default function Home() {
         .hero-title {
           font-family: 'Druk Wide Cyr', 'Arial Black', sans-serif;
           font-weight: 500;
-          font-size: clamp(28px, 4vw, 48px);
+          font-size: clamp(18px, 3vw, 38px);
           line-height: 1;
           color: #FFFFFF;
           margin: 0;
