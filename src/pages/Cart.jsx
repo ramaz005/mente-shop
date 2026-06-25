@@ -89,14 +89,14 @@ export default function Cart() {
           border-bottom: 1px solid #eee;
         }
         .cart-item-img {
-          width: 80px; height: 100px;
+          width: 120px; height: 160px;
           object-fit: cover;
           background: #f5f5f5;
           border-radius: 4px;
           flex-shrink: 0;
         }
         .cart-item-img-placeholder {
-          width: 80px; height: 100px;
+          width: 120px; height: 160px;
           background: #f5f5f5;
           border-radius: 4px;
           flex-shrink: 0;

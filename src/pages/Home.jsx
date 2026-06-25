@@ -72,7 +72,7 @@ export default function Home() {
         .hero-title {
           font-family: 'Druk Wide Cyr', 'Arial Black', sans-serif;
           font-weight: 500;
-          font-size: clamp(52px, 8vw, 96px);
+          font-size: clamp(28px, 4vw, 48px);
           line-height: 1;
           color: #FFFFFF;
           margin: 0;
@@ -126,7 +126,7 @@ export default function Home() {
           transform: scale(1.3);
         }
         @media (max-width: 768px) {
-          .hero-title { font-size: 48px !important; }
+          .hero-title { font-size: 28px !important; }
           .hero-sub { font-size: 11px !important; letter-spacing: 3px !important; }
           .hero-btn { font-size: 11px !important; margin-top: 24px !important; }
         }
