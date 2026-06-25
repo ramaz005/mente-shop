@@ -62,7 +62,8 @@ export default function Cart() {
   if (success) return (
     <div style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', textAlign: 'center', padding: '40px' }}>
       <h2 style={{ fontFamily: 'Anonymous Pro', fontSize: '28px', letterSpacing: '4px', marginBottom: '16px' }}>ЗАКАЗ ОФОРМЛЕН</h2>
-      <p style={{ fontFamily: 'Anonymous Pro', fontSize: '14px', color: '#7F7F7F', marginBottom: '40px' }}>Мы свяжемся с вами: {phone}</p>
+      <p style={{ fontFamily: 'Anonymous Pro', fontSize: '14px', color: '#7F7F7F', marginBottom: '8px' }}>Спасибо за заказ, {name}!</p>
+      <p style={{ fontFamily: 'Anonymous Pro', fontSize: '14px', color: '#7F7F7F', marginBottom: '40px' }}>Дальнейшая информация ожидает Вас на почте.</p>
       <Link to="/catalog" style={{ padding: '16px 40px', backgroundColor: '#2F2F2F', color: '#fff', fontFamily: 'Anonymous Pro', fontSize: '13px', letterSpacing: '3px', textDecoration: 'none', borderRadius: '8px' }}>
         ПРОДОЛЖИТЬ ПОКУПКИ
       </Link>

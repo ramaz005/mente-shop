@@ -57,11 +57,10 @@ export default function Catalog() {
         .catalog-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          border-top: 1px solid #000;
         }
         .product-card {
-          border-right: 1px solid #000;
-          border-bottom: 1px solid #000;
+          border-right: 1px solid #e0e0e0;
+          border-bottom: 1px solid #e0e0e0;
           cursor: pointer;
           text-decoration: none;
           color: #000;
@@ -100,7 +99,7 @@ export default function Catalog() {
         }
         @media (max-width: 768px) {
           .catalog-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .product-card:nth-child(4n) { border-right: 1px solid #000; }
+          .product-card:nth-child(4n) { border-right: 1px solid #e0e0e0; }
           .product-card:nth-child(2n) { border-right: none !important; }
         }
         @media (max-width: 480px) {

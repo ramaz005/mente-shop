@@ -12,7 +12,7 @@ export default function Delivery() {
         </p>
         <h1 style={{
           fontFamily: "'Druk Wide Cyr', 'Arial Black', sans-serif",
-          fontSize: 'clamp(32px, 5vw, 64px)',
+          fontSize: 'clamp(22px, 3vw, 40px)',
           letterSpacing: '2px', color: '#000', lineHeight: '1.1'
         }}>
           ДОСТАВКА И ОПЛАТА

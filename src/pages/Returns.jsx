@@ -11,7 +11,7 @@ export default function Returns() {
         </p>
         <h1 style={{
           fontFamily: "'Druk Wide Cyr', 'Arial Black', sans-serif",
-          fontSize: 'clamp(32px, 5vw, 64px)',
+          fontSize: 'clamp(22px, 3vw, 40px)',
           letterSpacing: '2px', color: '#000', lineHeight: '1.1'
         }}>
           ВОЗВРАТ И ОБМЕН
@@ -63,8 +63,8 @@ export default function Returns() {
             { step: '03', label: 'Отправьте товар', desc: 'Упакуйте товар с бирками и отправьте по указанному нами адресу.' },
             { step: '04', label: 'Получите деньги', desc: 'После проверки товара вернём деньги в течение 3–5 рабочих дней.' },
           ].map((item, i) => (
-            <div key={i} style={{ display: 'flex', gap: '20px', marginBottom: '28px' }}>
-              <p style={{ fontFamily: "'Druk Wide Cyr', 'Arial Black'", fontSize: '32px', color: '#000', opacity: 0.1, lineHeight: '1', flexShrink: 0 }}>
+            <div key={i} style={{ display: 'flex', gap: '20px', marginBottom: '28px', alignItems: 'flex-start' }}>
+              <p style={{ fontFamily: "'Druk Wide Cyr', 'Arial Black'", fontSize: '28px', color: '#000', opacity: 0.12, lineHeight: '1', flexShrink: 0, minWidth: '44px', textAlign: 'right' }}>
                 {item.step}
               </p>
               <div>

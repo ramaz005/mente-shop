@@ -83,11 +83,10 @@ export default function Contacts() {
           </div>
 
           <div>
-            <p className="contacts-block-title">Instagram / VK</p>
+            <p className="contacts-block-title">Instagram</p>
             <a href="https://instagram.com/[ваш_аккаунт]" target="_blank" rel="noopener noreferrer" className="contacts-block-val">
               @[ваш_аккаунт]
             </a>
-            <p className="contacts-note">Самовывоз: [город, адрес]<br />по предварительной записи</p>
           </div>
         </div>
 
@@ -96,9 +95,7 @@ export default function Contacts() {
         <div>
           <p className="contacts-block-title">По вопросам заказов, доставки и возврата</p>
           <p style={{ fontFamily: 'Anonymous Pro', fontSize: '14px', color: '#555', lineHeight: '1.8' }}>
-            Оставьте заявку в корзине — мы перезвоним в течение 2 часов в рабочее время.
-            Если вы уже оформили заказ и хотите уточнить статус — напишите нам в мессенджер,
-            указав номер телефона, который вводили при оформлении.
+            Напишите нам в мессенджер или на почту — ответим в течение рабочего дня.
           </p>
         </div>
       </div>

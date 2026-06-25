@@ -171,7 +171,7 @@ export default function Footer() {
         }
       `}</style>
 
-      <div className="footer-top">
+      <div className="footer-top" id="info">
         {/* Навигация — новый порядок без корзины */}
         <div>
           <p className="footer-col-title">БОЛЬШЕ ОПЦИЙ</p>

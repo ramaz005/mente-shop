@@ -84,7 +84,7 @@ export default function Home() {
           font-size: 13px;
           line-height: 1.4;
           color: rgba(255,255,255,0.85);
-          margin: 6px 0 0;
+          margin: 2px 0 0;
           letter-spacing: 4px;
           text-transform: lowercase;
         }

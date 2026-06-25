@@ -11,8 +11,8 @@ export default function Navbar() {
 
   const menuLinks = [
     { to: '/catalog', label: 'КАТАЛОГ' },
-    { to: '/about', label: 'О БРЕНДЕ' },
     { to: '/cart', label: 'КОРЗИНА' },
+    { to: '/#info', label: 'ИНФОРМАЦИЯ' },
   ];
 
   const handleSearch = (e) => {
@@ -212,7 +212,7 @@ export default function Navbar() {
 
         <div className="navbar-center">
           <Link to="/catalog" className="navbar-logo">MENTE</Link>
-          <div className="navbar-tagline">born in moscow — inspired by spain.</div>
+          <div className="navbar-tagline">born in Moscow — inspired by Spain.</div>
         </div>
 
         <div className="navbar-right">
