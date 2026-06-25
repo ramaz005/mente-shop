@@ -118,16 +118,23 @@ export default function Navbar() {
         }
         .burger-btn:hover { opacity: 0.5; }
         .burger-line {
+          display: block;
           width: 20px !important;
           min-width: 20px !important;
           max-width: 20px !important;
           height: 1px !important;
+          min-height: 1px !important;
+          max-height: 1px !important;
           background: #000;
-          display: block;
           flex-shrink: 0;
           box-sizing: content-box;
-          padding: 0;
-          margin: 0;
+          padding: 0 !important;
+          margin: 0 !important;
+          line-height: 0 !important;
+          font-size: 0 !important;
+          overflow: hidden;
+          border: none;
+          border-radius: 0;
         }
         .search-overlay {
           position: fixed;
