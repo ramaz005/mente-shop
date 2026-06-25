@@ -12,8 +12,14 @@ export default function Navbar() {
   const menuLinks = [
     { to: '/catalog', label: 'КАТАЛОГ' },
     { to: '/cart', label: 'КОРЗИНА' },
-    { to: '/#info', label: 'ИНФОРМАЦИЯ' },
   ];
+
+  const scrollToInfo = () => {
+    setMenuOpen(false);
+    setTimeout(() => {
+      document.getElementById('info')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -106,16 +112,17 @@ export default function Navbar() {
           cursor: pointer;
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 5px;
           padding: 4px;
           transition: opacity 0.2s;
         }
         .burger-btn:hover { opacity: 0.5; }
         .burger-line {
-          width: 24px;
-          height: 1.5px;
+          width: 20px;
+          height: 1px;
           background: #000;
           display: block;
+          flex-shrink: 0;
         }
         .search-overlay {
           position: fixed;
@@ -271,6 +278,9 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          <button className="mobile-menu-link" onClick={scrollToInfo} style={{ background: 'none', border: 'none', textAlign: 'left', cursor: 'pointer', padding: '20px 0' }}>
+            ИНФОРМАЦИЯ
+          </button>
         </div>
       )}
     </>

@@ -72,32 +72,32 @@ export default function Home() {
         .hero-title {
           font-family: 'Druk Wide Cyr', 'Arial Black', sans-serif;
           font-weight: 500;
-          font-size: 56px;
-          line-height: 1.1;
+          font-size: clamp(52px, 8vw, 96px);
+          line-height: 1;
           color: #FFFFFF;
           margin: 0;
-          letter-spacing: 2px;
+          letter-spacing: 3px;
         }
         .hero-sub {
           font-family: 'Anonymous Pro', monospace;
           font-weight: 400;
-          font-size: 13px;
-          line-height: 1.4;
-          color: rgba(255,255,255,0.85);
-          margin: 2px 0 0;
-          letter-spacing: 4px;
+          font-size: clamp(11px, 1.2vw, 15px);
+          line-height: 1;
+          color: rgba(255,255,255,0.8);
+          margin: 6px 0 0;
+          letter-spacing: 5px;
           text-transform: lowercase;
         }
         .hero-btn {
           display: inline-block;
           font-family: 'Anonymous Pro', monospace;
           font-weight: 400;
-          font-size: 14px;
+          font-size: clamp(11px, 1vw, 13px);
           line-height: 1;
           color: #FFFFFF;
           text-decoration: underline;
           text-underline-offset: 4px;
-          margin-top: 28px;
+          margin-top: 32px;
           transition: opacity 0.3s;
           cursor: pointer;
           letter-spacing: 3px;
@@ -126,9 +126,9 @@ export default function Home() {
           transform: scale(1.3);
         }
         @media (max-width: 768px) {
-          .hero-title { font-size: 36px !important; }
+          .hero-title { font-size: 48px !important; }
           .hero-sub { font-size: 11px !important; letter-spacing: 3px !important; }
-          .hero-btn { font-size: 12px !important; }
+          .hero-btn { font-size: 11px !important; margin-top: 24px !important; }
         }
       `}</style>
 
