@@ -4,8 +4,8 @@ import { useEffect, useState, useRef } from 'react';
 // Фото слайдера — файлы должны лежать в папке public/
 const SLIDES = [
   '/hero.webp',
-  '/hero2.jpg',
-  '/hero3.jpg',
+  '/hero2.webp',
+  '/hero3.webp',
 ];
 
 const INTERVAL = 3000; // автопрокрутка 3.5 сек
