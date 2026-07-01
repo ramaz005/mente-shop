@@ -4,8 +4,8 @@ import { useEffect, useState, useRef } from 'react';
 // Фото слайдера — файлы должны лежать в папке public/
 const SLIDES = [
   '/hero.webp',
-  '/hero2.jpg',
-  '/hero3.jpg',
+  '/hero2.JPG',
+  '/hero3.JPG',
 ];
 
 const INTERVAL = 3500; // автопрокрутка 3.5 сек
@@ -151,18 +151,6 @@ export default function Home() {
         <Link to="/catalog" className="hero-btn">CATALOG</Link>
       </div>
 
-      {SLIDES.length > 1 && (
-        <div className="hero-dots">
-          {SLIDES.map((_, i) => (
-            <button
-              key={i}
-              className={`hero-dot${i === current ? ' active' : ''}`}
-              onClick={() => goTo(i)}
-              aria-label={`Слайд ${i + 1}`}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
