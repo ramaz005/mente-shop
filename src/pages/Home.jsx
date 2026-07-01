@@ -4,11 +4,11 @@ import { useEffect, useState, useRef } from 'react';
 // Фото слайдера — файлы должны лежать в папке public/
 const SLIDES = [
   '/hero.webp',
-  '/hero2.JPG',
-  '/hero3.JPG',
+  '/hero2.jpg',
+  '/hero3.jpg',
 ];
 
-const INTERVAL = 3500; // автопрокрутка 3.5 сек
+const INTERVAL = 3000; // автопрокрутка 3.5 сек
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
