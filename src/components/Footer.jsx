@@ -22,7 +22,8 @@ export default function Footer() {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!message.trim()) return;
+    if (!message.trim() || message.trim().length > 2000) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
     setSending(true);
 
     const { error } = await supabase.from('contact_messages').insert({
@@ -249,6 +250,7 @@ export default function Footer() {
                 placeholder="Напишите ваш вопрос или комментарий..."
                 value={message}
                 onChange={e => setMessage(e.target.value)}
+                maxLength={2000}
                 autoFocus
               />
               {msgStatus === 'error' && (

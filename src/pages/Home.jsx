@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 
-// Добавляй сюда пути к новым фото когда заказчик пришлёт:
-// '/hero2.webp', '/hero3.webp' и т.д.
+// Фото слайдера — файлы должны лежать в папке public/
 const SLIDES = [
   '/hero.webp',
+  '/hero2.jpg',
+  '/hero3.jpg',
 ];
 
 const INTERVAL = 3500; // автопрокрутка 3.5 сек

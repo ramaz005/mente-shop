@@ -221,9 +221,9 @@ export default function Cart() {
               Все поля обязательны
             </p>
 
-            <input className="form-input" placeholder="Ваше имя" value={name} onChange={e => setName(e.target.value)} />
-            <input className="form-input" placeholder="Фамилия" value={surname} onChange={e => setSurname(e.target.value)} />
-            <input className="form-input" placeholder="E-mail" type="email" value={email} onChange={e => setEmail(e.target.value)} />
+            <input className="form-input" placeholder="Ваше имя" value={name} onChange={e => setName(e.target.value)} maxLength={100} />
+            <input className="form-input" placeholder="Фамилия" value={surname} onChange={e => setSurname(e.target.value)} maxLength={100} />
+            <input className="form-input" placeholder="E-mail" type="email" value={email} onChange={e => setEmail(e.target.value)} maxLength={254} />
 
             <div className="phone-wrap">
               <span className="phone-prefix">+7</span>
